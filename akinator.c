@@ -5,4 +5,6 @@
 int main(){
     FILE * file;
     file = fopen("DATAakinator.txt", "r+");
+
+    fclose(file);
 }
