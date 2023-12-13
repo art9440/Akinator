@@ -3,5 +3,4 @@ project(Akinator C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(Akinator
-        akinator.c)
+add_executable(Akinator  akinator.c  Tree.h)
