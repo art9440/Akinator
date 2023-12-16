@@ -1,0 +1,15 @@
+1 Is this man left-handed?
+2 Has he got a one-handed backhand?
+3 Has he got a one-handed backhand?
+4 Is he from Canada?
+5 Was he the first racket of the world?
+6 Is he from Switzerland?
+7 Is he from Russia?
+8 Denis Shapovalov
+9 Feliciano Lopez
+10 Rafael Nadal
+11 Bob Bryan
+12 Roger Federer
+13 Stephanos Tsitsipas
+14 Danil Medvedev
+15 Alexandr Zverev
