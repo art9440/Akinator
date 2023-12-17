@@ -56,9 +56,6 @@ void CreateNewData(char* savetxt, int savenum, FILE * file){
     char correct_answ[256];
     char new_qstn[256];
     char new_answ[4];
-    int new_num1, new_num2;
-    new_num1 = savenum * 2;
-    new_num2 = savenum * 2 + 1;
 
     puts("What is the correct answer?");
     char c = getchar();
@@ -76,8 +73,13 @@ void CreateNewData(char* savetxt, int savenum, FILE * file){
         arr = realloc(arr, (arr_len + 1) * sizeof(char*));
         arr[arr_len] = strdup(string);
         if (savenum == getNum(arr[arr_len])) {
-            char num = (char) savenum;
-            printf("%c*", num);
+            char* newstr = (char*) malloc(sizeof (char));
+            puts("*");
+            newstr = (char*) savenum;
+            strcat( newstr, "-");
+            strcat(newstr, new_qstn);
+            realloc(newstr, sizeof (char));
+            arr[arr_len] = newstr;
         }
         arr_len++;
     }
