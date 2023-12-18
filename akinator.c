@@ -52,7 +52,6 @@ void FromFileToTree(TREE*tree, char*buffer){
 
 
 void CreateNewData(char* savetxt, int savenum, FILE * file){
-    printf("%d", savenum);
     char correct_answ[256];
     char new_qstn[256];
     char new_answ[4];
@@ -65,29 +64,18 @@ void CreateNewData(char* savetxt, int savenum, FILE * file){
     puts("What is the answer for this question?");
     scanf("%s", new_answ);
     file = fopen("DATAakinator.txt", "r+");
-    char string[256];
-    char **arr = NULL;
+    char **arr = (char**)malloc(sizeof (char*));
     int arr_len = 0;
-
-    while (fgets(string, sizeof(string), file) != NULL){
-        arr = realloc(arr, (arr_len + 1) * sizeof(char*));
-        arr[arr_len] = strdup(string);
-        if (savenum == getNum(arr[arr_len])) {
-            char* newstr = (char*) malloc(sizeof (char));
-            puts("*");
-            newstr = (char*) savenum;
-            strcat( newstr, "-");
-            strcat(newstr, new_qstn);
-            realloc(newstr, sizeof (char));
-            arr[arr_len] = newstr;
-        }
+    char *buffer = (char*)malloc(sizeof (char));
+    while (fgets(buffer, 256, file)){
+        arr[arr_len] = buffer;
+        int buf_len = strlen(buffer);
+        printf("%s", arr[arr_len]);
         arr_len++;
+        realloc(arr, buf_len * sizeof(char*));
     }
     fclose(file);
 
-    for (int i = 0;i<arr_len;i++){
-        printf("%s", arr[i]);
-    }
 }
 
 
