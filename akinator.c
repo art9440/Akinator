@@ -18,7 +18,7 @@ char * getSentence(char*buffer){
         sentence[str_len] = buffer[i];
         str_len++;
         i++;
-        sentence = (char*)realloc(sentence, i * sizeof (char));
+        sentence = (char*)realloc(sentence, 1000 * sizeof (char));
     }
 
     sentence[str_len] = '\0';
@@ -52,6 +52,7 @@ void FromFileToTree(TREE*tree, char*buffer){
 
 
 char * FromIntToStr(int num){
+
     char *result = (char*) malloc(sizeof(char));
     int res_len = 0;
 
@@ -59,8 +60,9 @@ char * FromIntToStr(int num){
         result[res_len] = '0' + num % 10;
         num /= 10;
         res_len++;
-        result = (char*)realloc(result, sizeof(char) * (res_len + 1));
+        result = (char*)realloc(result, sizeof(char) * 1000);
     }
+
     result[res_len] = '\0';
 
     for (int i = 0; i < res_len / 2; i++) {
@@ -70,6 +72,7 @@ char * FromIntToStr(int num){
     }
 
     return result;
+
 }
 
 
