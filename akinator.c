@@ -105,6 +105,7 @@ void CreateNewData(char* savetxt, int savenum, FILE * file, TREE* tree){
     }
 
     if (strcmp(new_answ, "yes") == 0) {
+        fputs("\n", tmp_file);
         char *cur_left = FromIntToStr(savenum * 2);
         char *cur_right = FromIntToStr(savenum * 2 + 1);
 
@@ -119,6 +120,7 @@ void CreateNewData(char* savetxt, int savenum, FILE * file, TREE* tree){
         fputs(cur_right, tmp_file);
     }
     else if (strcmp(new_answ, "no") == 0){
+        fputs("\n", tmp_file);
         char *cur_left = FromIntToStr(savenum * 2 + 1);
         char *cur_right = FromIntToStr(savenum * 2);
 
@@ -151,7 +153,6 @@ int main(){
         FromFileToTree(tree, buffer);
     }
     fclose(file);
-
     while (tree != NULL){
         printf("%s", tree -> text);
         char answer[4];
