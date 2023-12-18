@@ -5,10 +5,10 @@
 #include "Tree.h"
 
 
-char * getSentence(char*buffer){
+char * getSentence(char*buffer){ //take string without number from file
     int i = 0;
     int str_len = 0;
-    char* sentence = (char*) malloc(sizeof (char));
+    char* sentence = (char*) malloc(sizeof(char));
 
     while (buffer[i] != '-')
         i++;
@@ -26,7 +26,7 @@ char * getSentence(char*buffer){
 }
 
 
-int getNum(char* buffer){
+int getNum(char* buffer){  //take number of string from file
     int i = 0;
     int num_len = 0;
     char num[1000];
@@ -44,7 +44,7 @@ int getNum(char* buffer){
 }
 
 
-void FromFileToTree(TREE*tree, char*buffer){
+void FromFileToTree(TREE*tree, char*buffer){ //from file making tree
     int number = getNum(buffer);
     char* str = getSentence(buffer);
     insert(tree, str, number);
@@ -92,11 +92,11 @@ void CreateNewData(char* savetxt, int savenum, FILE * file, TREE* tree){
     char *filename = "DATAakinator.txt";
     char *tmp_filename = "temp.txt";
     file = fopen("DATAakinator.txt", "r+");
-    FILE * tmp_file = fopen(tmp_filename, "w+");
+    FILE * tmp_file = fopen(tmp_filename, "w+");  //creating new file
 
-    while(fgets(buffer, sizeof(buffer), file) != NULL) {
-        if (getNum(buffer) == savenum){
-            char* str_num;
+    while(fgets(buffer, sizeof(buffer), file) != NULL){
+        if (getNum(buffer) == savenum){          //putting strings from
+            char* str_num;                       //old file in new file
             str_num = FromIntToStr(savenum);
             strcat(str_num, "-");
             strcat(str_num, new_qstn);
@@ -109,7 +109,7 @@ void CreateNewData(char* savetxt, int savenum, FILE * file, TREE* tree){
             fputs(buffer, tmp_file);
     }
 
-    if (strcmp(new_answ, "yes") == 0) {
+    if (strcmp(new_answ, "yes") == 0) {    //putting new answers in new file
         fputs("\n", tmp_file);
         char *cur_left = FromIntToStr(savenum * 2);
         char *cur_right = FromIntToStr(savenum * 2 + 1);
@@ -141,9 +141,9 @@ void CreateNewData(char* savetxt, int savenum, FILE * file, TREE* tree){
     }
     fclose(file);
     fclose(tmp_file);
-    remove(filename);
-    rename(tmp_filename, filename);
-
+    remove(filename); //delete old file
+    rename(tmp_filename, filename); //rename new file
+                                                           //like the od one
 }
 
 
@@ -158,7 +158,7 @@ int main(){
         FromFileToTree(tree, buffer);
     }
     fclose(file);
-    while (tree != NULL){
+    while (tree != NULL){    //use tree to know the answer
         printf("%s", tree -> text);
         char answer[4];
         scanf("%s", &answer);
