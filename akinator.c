@@ -29,17 +29,17 @@ char * getSentence(char*buffer){
 int getNum(char* buffer){
     int i = 0;
     int num_len = 0;
-    char *num = (char*) malloc(sizeof (char));
+    char num[1000];
 
     while (buffer[i] != '-'){
         num[num_len] = buffer[i];
         num_len++;
         i++;
-        num = (char*)realloc(num ,1000 * sizeof (char));
     }
 
     num[num_len] = '\0';
-    return atoi(num);
+    int result = atoi(num);
+    return result;
 
 }
 
@@ -85,10 +85,12 @@ void CreateNewData(char* savetxt, int savenum, FILE * file, TREE* tree){
     gets(new_qstn);
     puts("What is the answer for this question?");
     scanf("%s", new_answ);
+
     char *filename = "DATAakinator.txt";
     char *tmp_filename = "temp.txt";
     file = fopen("DATAakinator.txt", "r+");
     FILE * tmp_file = fopen(tmp_filename, "w+");
+
     while(fgets(buffer, sizeof(buffer), file) != NULL) {
         if (getNum(buffer) == savenum){
             char* str_num;
