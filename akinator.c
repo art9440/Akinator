@@ -18,7 +18,7 @@ char * getSentence(char*buffer){
         sentence[str_len] = buffer[i];
         str_len++;
         i++;
-        sentence = (char*)realloc(sentence, 1000 * sizeof (char));
+        sentence = (char*)realloc(sentence, i * sizeof (char));
     }
 
     sentence[str_len] = '\0';
@@ -67,18 +67,18 @@ void CreateNewData(char* savetxt, int savenum, FILE * file, TREE* tree){
     gets(new_qstn);
     puts("What is the answer for this question?");
     scanf("%s", new_answ);
+    char *tmp_filename = "temp.txt";
     file = fopen("DATAakinator.txt", "r+");
-    fseek(file, 0, SEEK_END);
-    fgets(buffer, sizeof(buffer),file);
-    fclose(file);
-    file = fopen("DATAakinator.txt", "a");
-    if (strcmp("yes", new_answ) == 0){
-        if(buffer[strlen(buffer)-1]!='\n')
-            fputs("\n", file);
-        fputs(FromIntToStr(savenum), file);
-        fclose(file);
-        return;
+    FILE * tmp_file = fopen(tmp_filename, "w");
+    long position = 0;
+    while(fgets(buffer, 256, file) != NULL) {
+        if (getNum(buffer) == savenum){
+            position = ftell(file) - strlen(getSentence(buffer)) - 1;
+        }
     }
+    fseek(file, position, SEEK_SET);
+    fprintf(file, "%s", new_qstn);
+    fclose(file);
 
 }
 
