@@ -151,6 +151,8 @@ int main(){
     FILE * file;
     TREE* tree;
     char buffer[256];
+    puts("Welcome to the Akinator about Tennis players!!\n");
+    puts("Answer on questions only with: yes/no.\n");
     file = fopen("DATAakinator.txt", "r");
     fgets(buffer, 256, file);
     tree = create(getSentence(buffer), getNum(buffer));
