@@ -50,8 +50,26 @@ void FromFileToTree(TREE*tree, char*buffer){
     insert(tree, str, number);
 }
 
+
 char * FromIntToStr(int num){
-    char *res = (char*) malloc(sizeof(char) * 12);
+    char *result = (char*) malloc(sizeof(char));
+    int res_len = 0;
+
+    while (num != 0) {
+        result[res_len] = '0' + num % 10;
+        num /= 10;
+        res_len++;
+        result = (char*)realloc(result, sizeof(char) * (res_len + 1));
+    }
+    result[res_len] = '\0';
+
+    for (int i = 0; i < res_len / 2; i++) {
+        char tmp = result[i];
+        result[i] = result[res_len - 1 - i];
+        result[res_len - 1 - i] = tmp;
+    }
+
+    return result;
 }
 
 
@@ -67,18 +85,57 @@ void CreateNewData(char* savetxt, int savenum, FILE * file, TREE* tree){
     gets(new_qstn);
     puts("What is the answer for this question?");
     scanf("%s", new_answ);
+    char *filename = "DATAakinator.txt";
     char *tmp_filename = "temp.txt";
     file = fopen("DATAakinator.txt", "r+");
-    FILE * tmp_file = fopen(tmp_filename, "w");
-    long position = 0;
-    while(fgets(buffer, 256, file) != NULL) {
+    FILE * tmp_file = fopen(tmp_filename, "w+");
+    while(fgets(buffer, sizeof(buffer), file) != NULL) {
         if (getNum(buffer) == savenum){
-            position = ftell(file) - strlen(getSentence(buffer)) - 1;
+            char* str_num;
+            str_num = FromIntToStr(savenum);
+            strcat(str_num, "-");
+            strcat(str_num, new_qstn);
+            strcat(str_num, "\n");
+            printf("%s", str_num);
+            fputs(str_num, tmp_file);
+
         }
+        else
+            fputs(buffer, tmp_file);
     }
-    fseek(file, position, SEEK_SET);
-    fprintf(file, "%s", new_qstn);
+
+    if (strcmp(new_answ, "yes") == 0) {
+        char *cur_left = FromIntToStr(savenum * 2);
+        char *cur_right = FromIntToStr(savenum * 2 + 1);
+
+        strcat(cur_left, "-");
+        strcat(cur_left, correct_answ);
+        strcat(cur_left, "\n");
+        fputs(cur_left, tmp_file);
+
+        strcat(cur_right, "-");
+        strcat(cur_right, savetxt);
+        strcat(cur_right, "\n");
+        fputs(cur_right, tmp_file);
+    }
+    else if (strcmp(new_answ, "no") == 0){
+        char *cur_left = FromIntToStr(savenum * 2 + 1);
+        char *cur_right = FromIntToStr(savenum * 2);
+
+        strcat(cur_left, "-");
+        strcat(cur_left, correct_answ);
+        strcat(cur_left, "\n");
+        fputs(cur_left, tmp_file);
+
+        strcat(cur_right, "-");
+        strcat(cur_right, savetxt);
+        strcat(cur_right, "\n");
+        fputs(cur_right, tmp_file);
+    }
     fclose(file);
+    fclose(tmp_file);
+    remove(filename);
+    rename(tmp_filename, filename);
 
 }
 
