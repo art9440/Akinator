@@ -50,9 +50,13 @@ void FromFileToTree(TREE*tree, char*buffer){
     insert(tree, str, number);
 }
 
+char * FromIntToStr(int num){
+    char *res = (char*) malloc(sizeof(char) * 12);
+}
 
-void CreateNewData(char* savetxt, int savenum, FILE * file){
-    char correct_answ[256];
+
+void CreateNewData(char* savetxt, int savenum, FILE * file, TREE* tree){
+    char correct_answ[256], buffer[256];
     char new_qstn[256];
     char new_answ[4];
 
@@ -64,17 +68,17 @@ void CreateNewData(char* savetxt, int savenum, FILE * file){
     puts("What is the answer for this question?");
     scanf("%s", new_answ);
     file = fopen("DATAakinator.txt", "r+");
-    char **arr = (char**)malloc(sizeof (char*));
-    int arr_len = 0;
-    char *buffer = (char*)malloc(sizeof (char));
-    while (fgets(buffer, 256, file)){
-        arr[arr_len] = buffer;
-        int buf_len = strlen(buffer);
-        printf("%s", arr[arr_len]);
-        arr_len++;
-        realloc(arr, buf_len * sizeof(char*));
-    }
+    fseek(file, 0, SEEK_END);
+    fgets(buffer, sizeof(buffer),file);
     fclose(file);
+    file = fopen("DATAakinator.txt", "a");
+    if (strcmp("yes", new_answ) == 0){
+        if(buffer[strlen(buffer)-1]!='\n')
+            fputs("\n", file);
+        fputs(FromIntToStr(savenum), file);
+        fclose(file);
+        return;
+    }
 
 }
 
@@ -107,7 +111,7 @@ int main(){
             int savenum = tree -> num;
             tree = tree->right;
             if (tree == NULL){
-                CreateNewData(savetxt, savenum, file);
+                CreateNewData(savetxt, savenum, file, tree);
             }
         }
         else {
