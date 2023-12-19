@@ -156,9 +156,9 @@ int main(){
     file = fopen("DATAakinator.txt", "r");
     fgets(buffer, 256, file);
     tree = create(getSentence(buffer), getNum(buffer));
-    while (fgets(buffer, 256, file) != NULL){
+    while (fgets(buffer, 256, file) != NULL)
         FromFileToTree(tree, buffer);
-    }
+
     fclose(file);
     while (tree != NULL){    //use tree to know the answer
         printf("%s", tree -> text);
@@ -175,9 +175,9 @@ int main(){
             char* savetxt = tree -> text;
             int savenum = tree -> num;
             tree = tree->right;
-            if (tree == NULL){
+            if (tree == NULL)
                 CreateNewData(savetxt, savenum, file, tree);
-            }
+
         }
         else {
             puts("Syntax error");
