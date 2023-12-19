@@ -17,7 +17,7 @@ char * getSentence(char*buffer){ //take string without number from file
         sentence[str_len] = buffer[i];
         str_len++;
         i++;
-        sentence = (char*)realloc(sentence, 1000 * sizeof (char));
+        sentence = (char*)realloc(sentence, 100 * sizeof (char));
     }
 
     sentence[str_len] = '\0';
@@ -59,7 +59,7 @@ char * FromIntToStr(int num){
         result[res_len] = '0' + num % 10;
         num /= 10;
         res_len++;
-        result = (char*)realloc(result, sizeof(char) * 1000);
+        result = (char*)realloc(result, sizeof(char) * 100);
     }
 
     result[res_len] = '\0';
